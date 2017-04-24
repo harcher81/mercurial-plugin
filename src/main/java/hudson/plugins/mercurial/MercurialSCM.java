@@ -956,7 +956,7 @@ public class MercurialSCM extends SCM implements Serializable {
     private @CheckForNull CachedRepo cachedSource(Node node, EnvVars env, Launcher launcher, TaskListener listener, boolean useTimeout, StandardUsernameCredentials credentials) 
             throws InterruptedException {
         MercurialInstallation inst = findInstallation(installation);
-        if (inst == null || !inst.isUseCaches()) {
+        if (inst == null || !(inst.isUseCaches() || inst.isUseSharing())) {
             return null;
         }
         try {

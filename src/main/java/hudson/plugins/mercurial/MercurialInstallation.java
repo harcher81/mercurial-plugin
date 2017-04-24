@@ -90,7 +90,7 @@ public class MercurialInstallation extends ToolInstallation implements
         super(name, home, properties);
         this.executable = Util.fixEmpty(executable);
         this.debug = debug;
-        this.useCaches = useCaches || useSharing;
+        this.useCaches = useCaches;
         this.masterCacheRoot = Util.fixEmptyAndTrim(masterCacheRoot);
         this.config = Util.fixEmptyAndTrim(config);
         this.useSharing = useSharing;
