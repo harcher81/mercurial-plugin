@@ -880,8 +880,14 @@ public class MercurialSCM extends SCM implements Serializable {
         }
     }
 
+    // TODO: 2.60+ Delete this override.
     @Override
-    public void buildEnvVars(AbstractBuild<?,?> build, Map<String, String> env) {
+    public void buildEnvVars(AbstractBuild<?,?> build, Map<String,String> env) {
+        buildEnvironment(build, env);
+    }
+
+    // TODO: 2.60+ - add @Override.
+    public void buildEnvironment(Run<?,?> build, Map<String, String> env) {
         buildEnvVarsFromActionable(build, env);
     }
 
@@ -1056,7 +1062,7 @@ public class MercurialSCM extends SCM implements Serializable {
         }
 
         public ListBoxModel doFillCredentialsIdItems(@AncestorInPath Job<?,?> owner, @QueryParameter String source) {
-            if (owner == null || !owner.hasPermission(Item.EXTENDED_READ)) {
+            if (!hasAccessToCredentialsMetadata(owner)) {
                 return new ListBoxModel();
             }
             return new StandardUsernameListBoxModel()
@@ -1064,6 +1070,12 @@ public class MercurialSCM extends SCM implements Serializable {
                     .withAll(availableCredentials(owner, new EnvVars( ).expand( source )));
         }
 
+        private boolean hasAccessToCredentialsMetadata(Job<?,?> owner) {
+            if (owner == null){
+                return Jenkins.getActiveInstance().hasPermission(Jenkins.ADMINISTER);
+            }
+            return owner.hasPermission(Item.EXTENDED_READ);
+        }
     }
 
     private static final long serialVersionUID = 1L;
