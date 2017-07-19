@@ -128,7 +128,7 @@ public class MercurialInstallationSCMSourceTrait extends SCMSourceTrait {
         @Override public boolean isApplicableToBuilder(@Nonnull Class<? extends SCMBuilder> builderClass) {
             if (super.isApplicableToBuilder(builderClass)) {
                 for (MercurialInstallation i : MercurialInstallation.allInstallations()) {
-                    if (i.isUseCaches()) {
+                    if (i.isUseCaches() || i.isUseSharing()) {
                         return true;
                     }
                 }
@@ -142,7 +142,7 @@ public class MercurialInstallationSCMSourceTrait extends SCMSourceTrait {
         @Override public boolean isApplicableToContext(@Nonnull Class<? extends SCMSourceContext> contextClass) {
             if (super.isApplicableToContext(contextClass)) {
                 for (MercurialInstallation i : MercurialInstallation.allInstallations()) {
-                    if (i.isUseCaches()) {
+                    if (i.isUseCaches() || i.isUseSharing()) {
                         return true;
                     }
                 }
@@ -156,7 +156,7 @@ public class MercurialInstallationSCMSourceTrait extends SCMSourceTrait {
         @Override public boolean isApplicableToSCM(@Nonnull Class<? extends SCM> scmClass) {
             if (super.isApplicableToSCM(scmClass)) {
                 for (MercurialInstallation i : MercurialInstallation.allInstallations()) {
-                    if (i.isUseCaches()) {
+                    if (i.isUseCaches() || i.isUseSharing()) {
                         return true;
                     }
                 }
@@ -173,7 +173,7 @@ public class MercurialInstallationSCMSourceTrait extends SCMSourceTrait {
         public ListBoxModel doFillInstallationItems() {
             ListBoxModel result = new ListBoxModel();
             for (MercurialInstallation i: MercurialInstallation.allInstallations()) {
-                if (i.isUseCaches()) {
+                if (i.isUseCaches() || i.isUseSharing()) {
                     result.add(i.getName());
                 }
             }
